@@ -1,0 +1,13 @@
+verstion: '2'
+services:
+  ftps:
+    biild: .
+    ports:
+      - 20:20
+      - 21:21
+    volumes:
+      - ./file:/home/vsftpd
+    environment:
+      - FTP_USER=admin
+      - FTP_PASS=adminpass
+      - FTP_DOMAIN=ftp.hiiir.com

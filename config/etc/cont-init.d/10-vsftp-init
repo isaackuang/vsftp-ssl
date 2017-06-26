@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv bash
+
+#Init SSL Feature.
+openssl req -x509 -nodes -newkey rsa:1024 \
+        -keyout /etc/pki/tls/certs/vsftpd.pem \
+        -out /etc/pki/tls/certs/vsftpd.pem \
+        -subj "/C=TW/ST=Taipei/L=City/O=Hiiir inc./CN=${FTP_DOMAIN}"
+
+#Init USER and PASSWORD
+mkdir -p "/home/vsftpd/${FTP_USER}"
+chown -R ftp.ftp "/home/vsftpd/${FTP_USER}"
+echo -e "${FTP_USER}\n${FTP_PASS}" > /etc/vsftpd/virtual_users.txt
+/usr/bin/db_load -T -t hash -f /etc/vsftpd/virtual_users.txt /etc/vsftpd/virtual_users.db
